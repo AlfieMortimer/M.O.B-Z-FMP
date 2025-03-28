@@ -8,6 +8,7 @@ TagManager:
   - NetworkFunctions
   - sessionCode
   - Enemy
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Ground
   - Target
-  - 
+  - Interactable
   - 
   - 
   - 

@@ -64,6 +64,9 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    NetworkObject nO;
+
+    bool RPCResponse;
 
     public MovementState state;
     public enum MovementState
@@ -79,6 +82,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void Start()
     {
+        nO = GetComponent<NetworkObject>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -311,5 +315,23 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Door" && nO.IsOwner)
+        {
+            Interactable interact = other.GetComponentInChildren<Interactable>();
+            int cost = interact.cost;
+            PointsCollection points = other.GetComponentInChildren<Interactable>().points;
+
+            if (Input.GetKey(KeyCode.E) && cost <= points.playerPoints[nO.OwnerClientId])
+            {
+                Debug.Log("Door Removed");
+                points.playerPoints[nO.OwnerClientId] -= cost;
+                interact.removeDoorRpc();
+            }
+
+        }
     }
 }

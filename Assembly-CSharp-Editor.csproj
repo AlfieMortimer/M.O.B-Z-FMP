@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{E03E592F-306E-EAC0-F2CC-73A1DA23A00F}</ProjectGuid>
+    <ProjectGuid>{AE023C44-BAA2-66E5-9103-D51CF166C222}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="C:\temp\AlfieMortimer\NetcodeForGameobjects-using-relays\Library\PackageCache\com.unity.transport\Analyzers\Unity.Transport.Analyzers.dll" />
+    <Analyzer Include="D:\year 2\Alfie M\Projects\M.O.B-Z-FMP\Library\PackageCache\com.unity.transport\Analyzers\Unity.Transport.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.23f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.23f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.23f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -1560,15 +1560,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{3651FB41-98CE-BAC1-FDCE-C3DDDE0562A6}</Project>
+      <Project>{F1DD70E0-68BC-8154-82CB-2BC4697A1D68}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="ChatChannelSample.Editor.csproj">
-      <Project>{118B3D9D-0A91-043E-B0F1-3599F51673F9}</Project>
+      <Project>{D6C32A73-F28C-8A26-2F05-72A84BA78065}</Project>
       <Name>ChatChannelSample.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="ChatChannelSample.csproj">
-      <Project>{AB524322-A14C-DC59-9D9C-1B5FCD13FECE}</Project>
+      <Project>{08D3AD15-FEE4-2492-169D-D24E12C00534}</Project>
       <Name>ChatChannelSample</Name>
     </ProjectReference>
   </ItemGroup>

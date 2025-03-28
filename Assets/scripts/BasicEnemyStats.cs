@@ -7,26 +7,32 @@ public class BasicEnemyStats : NetworkBehaviour
     int health;
     bool respawning;
     MeshRenderer mr;
+    PointsCollection points;
+    public int worth;
+    UiPointsClient UIPoints;
 
     private void Start()
     {
         health = 10;
         mr = gameObject.GetComponent<MeshRenderer>();
+        UIPoints = GameObject.FindWithTag("Player").GetComponent<UiPointsClient>();
+        points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
     }
-    private void Update()
+
+    [Rpc(SendTo.Server)]
+    public void TakeDamageRpc(ulong ClientID, int damage)
     {
-        if(health <= 0 && !respawning)
+        health -= damage;
+
+        if (health <= 0 && !respawning)
         {
             mr.enabled = false;
             Invoke("respawnObjectRpc", 2);
             respawning = true;
-        }
-    }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void TakeDamageRpc(int damage)
-    {
-        health -= damage;
+            points.collectPointsRpc(ClientID, worth);
+            UIPoints.UpdatePointsUIRpc();
+        }
     }
 
     [Rpc(SendTo.ClientsAndHost)]

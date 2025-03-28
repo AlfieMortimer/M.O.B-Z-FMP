@@ -46,6 +46,7 @@ public class PlayerWeapons : NetworkBehaviour
     NetworkObject nO;
     public AllWeaponStats stats;
 
+
     //BulletFX
     public Transform bulletSpawn;
     public TrailRenderer BulletTrail;
@@ -133,7 +134,8 @@ public class PlayerWeapons : NetworkBehaviour
             {
                 Debug.Log("You have hit an enemy");
                 enemydamage = true;
-                rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(stats.damage);
+                rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(nO.OwnerClientId, stats.damage);
+                UpdatePointsUI();
             }
         }
 
@@ -146,6 +148,10 @@ public class PlayerWeapons : NetworkBehaviour
             ReloadFunc();
         }
 
+
+    }
+    private void UpdatePointsUI()
+    {
 
     }
     private void ResetShot()
@@ -174,7 +180,7 @@ public class PlayerWeapons : NetworkBehaviour
         bullets.text = stats.magazineSize.ToString();
     }
 
-    //might have to RPC these at some point
+    //I will have to RPC these at some point to make sure the outside model is synched across clients.
     private void changeWeapon()
     {
         HeldWeapon = !HeldWeapon;
