@@ -325,10 +325,10 @@ public class PlayerMovementAdvanced : NetworkBehaviour
             int cost = interact.cost;
             PointsCollection points = other.GetComponentInChildren<Interactable>().points;
 
-            if (Input.GetKey(KeyCode.E) && cost <= points.playerPoints[nO.OwnerClientId])
+            if (Input.GetKey(KeyCode.E)) //&& cost <= points.playerPoints.Value[nO.OwnerClientId])
             {
                 Debug.Log("Door Removed");
-                points.playerPoints[nO.OwnerClientId] -= cost;
+                //points.playerPoints.Value[nO.OwnerClientId] -= cost;
                 interact.removeDoorRpc();
             }
 

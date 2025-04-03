@@ -420,8 +420,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7438230355370038161}
   - {fileID: 4021958234278047807}
+  - {fileID: 7438230355370038161}
   - {fileID: 2706309164359853278}
   - {fileID: 1414381729100402445}
   - {fileID: 3422546183611546337}
@@ -813,6 +813,7 @@ GameObject:
   - component: {fileID: 6298333524307532186}
   - component: {fileID: 7078020869569742699}
   - component: {fileID: 6000037270154731108}
+  - component: {fileID: 2430154835118188582}
   m_Layer: 7
   m_Name: player (No state machine No UI)
   m_TagString: Player
@@ -1161,6 +1162,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4741887, y: 1.7286671, z: 0.4964522}
   m_Center: {x: -0.026715875, y: -0.14955074, z: 0.018980622}
+--- !u!114 &2430154835118188582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4724776188444546644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9a9b928a0aa014a9e405daab3d6c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  p1UI: {fileID: 6312007771785545625}
+  p2UI: {fileID: 4766420339293539781}
+  p3UI: {fileID: 4739580775879974344}
+  P4UI: {fileID: 5807233335232223474}
+  allPoints: {fileID: 0}
+  playerOwner: {fileID: 0}
 --- !u!1 &5686846562195276077
 GameObject:
   m_ObjectHideFlags: 0

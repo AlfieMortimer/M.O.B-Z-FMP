@@ -19,8 +19,8 @@ public class BasicEnemyStats : NetworkBehaviour
         points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
     }
 
-    [Rpc(SendTo.Server)]
-    public void TakeDamageRpc(ulong ClientID, int damage)
+    [Rpc(SendTo.ClientsAndHost)]
+    public void TakeDamageRpc(int ClientID, int damage)
     {
         health -= damage;
 
@@ -30,8 +30,11 @@ public class BasicEnemyStats : NetworkBehaviour
             Invoke("respawnObjectRpc", 2);
             respawning = true;
 
-            points.collectPointsRpc(ClientID, worth);
-            UIPoints.UpdatePointsUIRpc();
+            if (IsServer)
+            {
+                points.collectPointsRpc(ClientID, worth);
+            }
+
         }
     }
 

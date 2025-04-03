@@ -7015,7 +7015,6 @@ GameObject:
   - component: {fileID: 1391129134}
   - component: {fileID: 1391129136}
   - component: {fileID: 1391129137}
-  - component: {fileID: 1391129138}
   m_Layer: 0
   m_Name: Network Functions
   m_TagString: NetworkFunctions
@@ -7102,25 +7101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   playerPoints: 00000000000000000000000000000000
---- !u!114 &1391129138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391129132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df9a9b928a0aa014a9e405daab3d6c4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  p1UI: {fileID: 0}
-  p2UI: {fileID: 0}
-  p3UI: {fileID: 0}
-  P4UI: {fileID: 0}
-  allPoints: {fileID: 0}
-  playerOwner: {fileID: 0}
 --- !u!1 &1411540349
 GameObject:
   m_ObjectHideFlags: 0

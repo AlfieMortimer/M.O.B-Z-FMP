@@ -20,6 +20,5 @@ public class Interactable : NetworkBehaviour
     {
         myTrigger.SetActive(false);
         gameObject.SetActive(false);
-        UIPoints.UpdatePointsUIRpc();
     }
 }

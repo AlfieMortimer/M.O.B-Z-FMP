@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Netcode;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class PlayerWeapons : NetworkBehaviour
 {
@@ -112,8 +113,8 @@ public class PlayerWeapons : NetworkBehaviour
         Debug.Log("Shot Bullet");
 
         //spread
-        float x = Random.Range(-stats.spread, stats.spread);
-        float y = Random.Range(-stats.spread, stats.spread);
+        float x = UnityEngine.Random.Range(-stats.spread, stats.spread);
+        float y = UnityEngine.Random.Range(-stats.spread, stats.spread);
 
         //Calculate direction with spread
         Vector3 direction = cam.transform.forward + new Vector3(x, y, 0);
@@ -134,7 +135,7 @@ public class PlayerWeapons : NetworkBehaviour
             {
                 Debug.Log("You have hit an enemy");
                 enemydamage = true;
-                rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(nO.OwnerClientId, stats.damage);
+                rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(Convert.ToInt32(nO.OwnerClientId.ToString()), stats.damage);
                 UpdatePointsUI();
             }
         }
