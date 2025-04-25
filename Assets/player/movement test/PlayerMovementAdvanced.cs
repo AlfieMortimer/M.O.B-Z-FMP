@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -322,14 +323,16 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         if (other.tag == "Door" && nO.IsOwner)
         {
             Interactable interact = other.GetComponentInChildren<Interactable>();
-            int cost = interact.cost;
-            PointsCollection points = other.GetComponentInChildren<Interactable>().points;
-
-            if (Input.GetKey(KeyCode.E)) //&& cost <= points.playerPoints.Value[nO.OwnerClientId])
+            PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+            Debug.Log("Points");
+            if (points != null && interact != null)
             {
-                Debug.Log("Door Removed");
-                //points.playerPoints.Value[nO.OwnerClientId] -= cost;
-                interact.removeDoorRpc();
+                if (Input.GetKeyDown(KeyCode.E) && interact.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
+                {
+                    Debug.Log("Door Removed");
+                    points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -interact.cost);
+                    interact.removeDoorRpc();
+                }
             }
 
         }

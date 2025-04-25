@@ -7,36 +7,40 @@ using System.Collections.Generic;
 
 public class PointsCollection : NetworkBehaviour, IEquatable<int[]>
 {
-    //public NetworkVariable<int[]> Points = new NetworkVariable<int[]>();
+    public NetworkList<int> playerPoints;
 
-    NetworkList<int> playerPoints;
-
+    bool complete = false;
     private void Awake()
     {
         playerPoints = new NetworkList<int>();
     }
     private void Start()
     {
-            playerPoints.Add(0);
-            playerPoints.Add(0);
-            playerPoints.Add(0);
-            playerPoints.Add(0);
-            Debug.Log(playerPoints.Count);
+
     }
     private void Update()
     {
-
+        if ((NetworkManager.IsConnectedClient || NetworkManager.IsHost) && complete == false)
+        {
+            if (NetworkManager.IsHost)
+            {
+                playerPoints.Add(0);
+                playerPoints.Add(0);
+                playerPoints.Add(0);
+                playerPoints.Add(0);
+            }
+            Debug.Log(playerPoints.Count);
+            if (playerPoints.Count > 0)
+            {
+                complete = true;
+            }
+        }
     }
 
 
     [Rpc(SendTo.Server)]
     public void collectPointsRpc(int clientID, int pointsToChange)
     {
-        if (playerPoints.Count-1 <= clientID)
-        {
-            playerPoints.Add(0);
-            Debug.Log(playerPoints.Count);
-        }
        
         //Points.Value[clientID] += pointsToChange;
         playerPoints[clientID] += pointsToChange;
@@ -45,19 +49,6 @@ public class PointsCollection : NetworkBehaviour, IEquatable<int[]>
 
     }
 
-    /*
-    private void OnSomeValueChanged(int previous, int current)
-    {
-        Debug.Log($"Detected NetworkVariable Change: Previous: {previous} | Current: {current}");
-    }
-
-
-
-    public void OnListChanged(NetworkListEvent<NetworkList<int>> changeEvent)
-    {
-        Debug.Log("The Value has changed");
-    }
-   */
     public bool Equals(int[] other)
     {
         throw new NotImplementedException();

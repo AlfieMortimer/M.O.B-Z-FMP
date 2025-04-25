@@ -26,23 +26,19 @@ public class BasicEnemyStats : NetworkBehaviour
 
         if (health <= 0 && !respawning)
         {
-            mr.enabled = false;
-            Invoke("respawnObjectRpc", 2);
-            respawning = true;
-
             if (IsServer)
             {
                 points.collectPointsRpc(ClientID, worth);
             }
+            EnemyDeathRPC();
 
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void respawnObjectRpc()
+    [Rpc(SendTo.Server)]
+    public void EnemyDeathRPC()
     {
-        health = 5;
-        mr.enabled = true;
-        respawning = false;
+        var instanceNetworkObject = gameObject.GetComponent<NetworkObject>();
+        instanceNetworkObject.Despawn();
     }
 }

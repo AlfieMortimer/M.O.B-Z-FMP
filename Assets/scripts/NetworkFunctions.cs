@@ -15,6 +15,7 @@ public class NetworkFunctions : NetworkBehaviour
     TextMeshProUGUI codeText;
     //Singleton Creation
     public static NetworkFunctions instance;
+    RoundCounter roundCounter;
 
     //Singleton Below
     void Awake()
@@ -78,6 +79,7 @@ public class NetworkFunctions : NetworkBehaviour
     void Start()
     {
         nM = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
+        roundCounter = gameObject.GetComponent<RoundCounter>();
     }
 
     private void Update()
@@ -85,9 +87,9 @@ public class NetworkFunctions : NetworkBehaviour
         //Testing Only remove after.
         if (Input.GetKeyDown("0") && nM.IsHost)
         {
-            SendClientsToNewScene("LoadnewSceneTests");
+            SendClientsToNewScene("ENemyTesting");
+            //SendClientsToNewScene("LoadnewSceneTests");
             menuScene = false;
-            
         }
     }
 
@@ -99,6 +101,7 @@ public class NetworkFunctions : NetworkBehaviour
         {
             nM.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
             menuScene = false;
+            roundCounter.gameStart = true;
             Debug.Log("Host has loaded menuScene on false");
         }
         else if (!nM.IsHost)

@@ -18,9 +18,7 @@ public class UiPointsClient : NetworkBehaviour
     {
         if (allPoints != null)
         {
-             // p1UI.text = allPoints.playerPoints[Convert.ToInt32(OwnerClientId.ToString())].ToString();
-              //p2UI.text = allPoints.playerPoints[1].ToString();
-
+             p1UI.text = allPoints.playerPoints[Convert.ToInt32(OwnerClientId.ToString())].ToString();
 
         }
     }
