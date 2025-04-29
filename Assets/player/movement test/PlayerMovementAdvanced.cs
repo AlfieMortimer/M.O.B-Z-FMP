@@ -91,6 +91,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
         startYScale = transform.localScale.y;
 
+
         networkself = gameObject.GetComponent<NetworkObject>();
         Debug.LogWarning("networkself: " + networkself);
         Debug.LogWarning("network owner: " + networkself.IsOwner);

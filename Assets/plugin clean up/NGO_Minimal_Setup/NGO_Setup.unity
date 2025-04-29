@@ -7089,7 +7089,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   currentRound:
     m_InternalValue: 0
-  enemiesLeftToSpawn: 8
+  enemiesLeftToSpawn: 5
   playerCount: 2
   zombieLimit: 32
   gameStart: 0
@@ -7103,8 +7103,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1411540352}
-  - component: {fileID: 1411540353}
   - component: {fileID: 1411540350}
+  - component: {fileID: 1411540353}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: NetworkManager
@@ -7165,17 +7165,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1411540349}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a152c68cceee3164a8d811510d7044fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkManagerExpanded: 1
+  NetworkManagerExpanded: 0
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1411540350}
     PlayerPrefab: {fileID: 4724776188444546644, guid: 0e29dadaed169334ab4e0adc8db54990, type: 3}
     Prefabs:
       NetworkPrefabsLists:
-      - {fileID: 11400000, guid: ffb23c23c51ebb7439cf9c5f2fce092f, type: 2}
+      - {fileID: 11400000, guid: c309de7fde441984298edb7c6943fc05, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -7184,7 +7184,7 @@ MonoBehaviour:
     TimeResyncInterval: 30
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 0
+    ForceSamePrefabs: 1
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
     RpcHashSize: 0

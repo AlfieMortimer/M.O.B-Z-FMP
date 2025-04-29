@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class EnemySpawner : NetworkBehaviour
@@ -18,22 +19,30 @@ public class EnemySpawner : NetworkBehaviour
 
     private void Start()
     {
-        nM = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+        if (IsHost)
+        {
         roundCounter = GameObject.FindWithTag("NetworkFunctions").GetComponent<RoundCounter>();
+        }
+        nM = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
     private void Update()
     {
         spawnerDelayRPC();
     }
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.ClientsAndHost)]
     void SpawnEnemyRPC()
     {
-        var instance = Instantiate(enemyPrefab, gameObject.transform.position, Quaternion.identity);
-        instance.GetComponent<EnemyNavigation>().FindMySpawn(spawnRoom, this);
-        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
-        instanceNetworkObject.Spawn();
-        roundCounter.currentEnemyCount++;
-        roundCounter.enemiesLeftToSpawn--;
+        //var instance = Instantiate(enemyPrefab, gameObject.transform.position, Quaternion.identity);
+        //instance.GetComponent<EnemyNavigation>().FindMySpawn(spawnRoom, this);
+        //var instanceNetworkObject = instance.GetComponent<NetworkObject>();
+        if (IsServer)
+        {
+            //instanceNetworkObject.Spawn();
+            NetworkObject.InstantiateAndSpawn(enemyPrefab, nM, 0, false, false, false, transform.position, Quaternion.identity);
+            roundCounter.currentEnemyCount++;
+            roundCounter.enemiesLeftToSpawn--;
+            enemySpawnDelay = 5;
+        }
     }
     [Rpc(SendTo.Server)]
     void spawnerDelayRPC()
@@ -42,8 +51,15 @@ public class EnemySpawner : NetworkBehaviour
         {
             if (roundCounter != null && roundCounter.enemiesLeftToSpawn > 0 && roundCounter.currentEnemyCount < roundCounter.zombieLimit)
             {
-                SpawnEnemyRPC();
-                Debug.Log(roundCounter.enemiesLeftToSpawn);
+                if (enemySpawnDelay <= 0)
+                {
+                    SpawnEnemyRPC();
+                    Debug.Log(roundCounter.enemiesLeftToSpawn);
+                }
+                else
+                {
+                    enemySpawnDelay -= Time.deltaTime;
+                }
             }
         }
         else if (roundStartDelay >= 0)

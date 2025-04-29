@@ -29,16 +29,16 @@ public class BasicEnemyStats : NetworkBehaviour
             if (IsServer)
             {
                 points.collectPointsRpc(ClientID, worth);
+                EnemyDeathRPC();
             }
-            EnemyDeathRPC();
-
+            
         }
     }
 
     [Rpc(SendTo.Server)]
     public void EnemyDeathRPC()
     {
-        var instanceNetworkObject = gameObject.GetComponent<NetworkObject>();
+        var instanceNetworkObject = NetworkObject;
         instanceNetworkObject.Despawn();
     }
 }

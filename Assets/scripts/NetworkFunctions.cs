@@ -96,6 +96,7 @@ public class NetworkFunctions : NetworkBehaviour
     //sends all clients to a new scene and spawns new players if needed
     public void SendClientsToNewScene(string sceneName)
     {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         Debug.Log(nM.IsHost);
         if (nM.IsHost)
         {

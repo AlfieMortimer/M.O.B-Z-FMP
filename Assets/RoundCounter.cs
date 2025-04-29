@@ -18,7 +18,10 @@ public class RoundCounter : NetworkBehaviour
 
     private void Update()
     {
-        endRoundCheckRPC();
+        if (IsServer)
+        {
+            endRoundCheckRPC();
+        }
     }
 
     //Only server athority can change network variables
