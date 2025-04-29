@@ -10,6 +10,7 @@ public class BasicEnemyStats : NetworkBehaviour
     PointsCollection points;
     public int worth;
     UiPointsClient UIPoints;
+    RoundCounter rc;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class BasicEnemyStats : NetworkBehaviour
         mr = gameObject.GetComponent<MeshRenderer>();
         UIPoints = GameObject.FindWithTag("Player").GetComponent<UiPointsClient>();
         points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+        rc = GameObject.FindWithTag("NetworkFunctions").GetComponent<RoundCounter>();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -28,6 +30,7 @@ public class BasicEnemyStats : NetworkBehaviour
         {
             if (IsServer)
             {
+                rc.currentEnemyCount--;
                 points.collectPointsRpc(ClientID, worth);
                 EnemyDeathRPC();
             }

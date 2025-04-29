@@ -20,7 +20,7 @@ public class RoundCounter : NetworkBehaviour
     {
         if (IsServer)
         {
-            endRoundCheckRPC();
+            EndRoundCheckRPC();
         }
     }
 
@@ -32,16 +32,20 @@ public class RoundCounter : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    void endRoundCheckRPC()
+    void EndRoundCheckRPC()
     {
-        if(enemiesLeftToSpawn <= 0 && currentEnemyCount <= 0)
+        Debug.Log($"checking for round end: CurrentEnemyCount - {currentEnemyCount} + enemies left to spawn {enemiesLeftToSpawn}");
+        if (enemiesLeftToSpawn <= 0 && currentEnemyCount <= 0)
         {
-            IncreaseRoundsRPC();
+            Debug.Log("Next Round Started");
+            Debug.Log(currentRound.Value);
+            //IncreaseRoundsRPC();
             OnRoundEnd();
         }
     }
     public void OnRoundEnd()
     {
+        playerCount = NetworkManager.ConnectedClients.Count;
         float playerValue = 1.5f;
         float enemies;
         if (playerCount >= 3)
@@ -53,6 +57,7 @@ public class RoundCounter : NetworkBehaviour
             playerValue = 2.5f;
         }
         enemies = (playerCount * playerValue) * currentRound.Value + 6;
-        enemiesLeftToSpawn = Convert.ToInt32(Mathf.Round(enemiesLeftToSpawn));
+        enemiesLeftToSpawn = Convert.ToInt32(Mathf.Round(enemies));
+        currentRound.Value++;
     }
 }
