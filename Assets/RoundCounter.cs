@@ -34,16 +34,20 @@ public class RoundCounter : NetworkBehaviour
     [Rpc(SendTo.Server)]
     void EndRoundCheckRPC()
     {
-        Debug.Log($"checking for round end: CurrentEnemyCount - {currentEnemyCount} + enemies left to spawn {enemiesLeftToSpawn}");
-        if (enemiesLeftToSpawn <= 0 && currentEnemyCount <= 0)
+        if (gameStart)
         {
-            Debug.Log("Next Round Started");
-            Debug.Log(currentRound.Value);
-            //IncreaseRoundsRPC();
-            OnRoundEnd();
+            Debug.Log($"checking for round end: CurrentEnemyCount - {currentEnemyCount} + enemies left to spawn {enemiesLeftToSpawn}");
+            if (enemiesLeftToSpawn <= 0 && currentEnemyCount <= 0)
+            {
+                Debug.Log("Next Round Started");
+                Debug.Log(currentRound.Value);
+                //IncreaseRoundsRPC();
+                OnRoundEndRPC();
+            }
         }
     }
-    public void OnRoundEnd()
+    [Rpc(SendTo.Server)]
+    public void OnRoundEndRPC()
     {
         playerCount = NetworkManager.ConnectedClients.Count;
         float playerValue = 1.5f;

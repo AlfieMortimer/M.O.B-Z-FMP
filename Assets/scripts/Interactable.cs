@@ -5,6 +5,7 @@ public class Interactable : NetworkBehaviour
     public GameObject myTrigger;
     public int cost;
     public bool interactable;
+    public GameObject[] mySpawners;
 
     public PointsCollection points;
     public UiPointsClient UIPoints;
@@ -18,6 +19,11 @@ public class Interactable : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void removeDoorRpc()
     {
+        foreach(GameObject spawner in mySpawners)
+        {
+            spawner.SetActive(true);
+        }
+        
         myTrigger.SetActive(false);
         gameObject.SetActive(false);
     }

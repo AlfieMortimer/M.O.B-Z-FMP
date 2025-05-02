@@ -53,6 +53,7 @@ public class PlayerWeapons : NetworkBehaviour
     public TrailRenderer BulletTrail;
     public ParticleSystem impact;
 
+    public RoundCounter rc;
     private void Awake()
     {
         bulletsLeft = magazineSize;
@@ -89,8 +90,7 @@ public class PlayerWeapons : NetworkBehaviour
                 ReloadFunc();
 
             }
-
-            if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+             if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
             {
                 bulletsShot = stats.bulletsPerTap;
                 ShootFunc();

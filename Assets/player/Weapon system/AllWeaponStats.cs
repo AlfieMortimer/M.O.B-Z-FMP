@@ -27,10 +27,21 @@ public class AllWeaponStats : ScriptableObject
         }
         else if(weapon == 3)
         {
-
+            empty();
         }
     }
 
+    public void empty()
+    {
+        damage = 0;
+        timeBetweenShooting = 0f;
+        spread = 0;
+        range = 100;
+        reloadTime = 0;
+        magazineSize = 0;
+        bulletsPerTap = 0;
+        allowButtonHold = false;
+    }
 
     public void PistolSwitch()
     {

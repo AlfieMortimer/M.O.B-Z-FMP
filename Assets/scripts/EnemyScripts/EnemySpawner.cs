@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEditor.PackageManager;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class EnemySpawner : NetworkBehaviour
@@ -11,9 +12,11 @@ public class EnemySpawner : NetworkBehaviour
 
     //Round Checks
     public RoundCounter roundCounter;
+    public bool activeOnStart;
 
     //Timer and spawning
-    [SerializeField] float roundStartDelay;
+    [SerializeField] float roundStartDelay = 10;
+    [SerializeField] float roundStartDelayvalue = 10;
     [SerializeField] float enemySpawnDelay;
     [SerializeField] NetworkManager nM;
 
@@ -21,9 +24,13 @@ public class EnemySpawner : NetworkBehaviour
     {
         if (IsHost)
         {
-        roundCounter = GameObject.FindWithTag("NetworkFunctions").GetComponent<RoundCounter>();
+            roundCounter = GameObject.FindWithTag("NetworkFunctions").GetComponent<RoundCounter>();
         }
         nM = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+        if (!activeOnStart)
+        {
+            gameObject.SetActive(false);
+        }
     }
     private void Update()
     {
@@ -41,7 +48,7 @@ public class EnemySpawner : NetworkBehaviour
             NetworkObject.InstantiateAndSpawn(enemyPrefab, nM, 0, false, false, false, transform.position, Quaternion.identity);
             roundCounter.currentEnemyCount++;
             roundCounter.enemiesLeftToSpawn--;
-            enemySpawnDelay = 5;
+            enemySpawnDelay = 3;
         }
     }
     [Rpc(SendTo.Server)]
@@ -49,18 +56,24 @@ public class EnemySpawner : NetworkBehaviour
     {
         if (roundStartDelay <= 0)
         {
-            if (roundCounter != null && roundCounter.enemiesLeftToSpawn > 0 && roundCounter.currentEnemyCount < roundCounter.zombieLimit)
+            if (roundCounter.enemiesLeftToSpawn <= 0 && roundCounter.currentEnemyCount <= 0)
             {
-                if (enemySpawnDelay <= 0)
-                {
-                    SpawnEnemyRPC();
-                    Debug.Log(roundCounter.enemiesLeftToSpawn);
-                }
-                else
-                {
-                    enemySpawnDelay -= Time.deltaTime;
-                }
+                roundStartDelay = roundStartDelayvalue;
+                Debug.Log("roundstartdelay reset");
             }
+
+                Debug.Log("Round Started");
+            if (roundCounter != null && roundCounter.enemiesLeftToSpawn > 0 && roundCounter.currentEnemyCount < roundCounter.zombieLimit && enemySpawnDelay <= 0)
+            {
+                
+                SpawnEnemyRPC();
+                Debug.Log(roundCounter.enemiesLeftToSpawn);
+            }
+            else
+            {
+                enemySpawnDelay -= Time.deltaTime;
+            }
+         
         }
         else if (roundStartDelay >= 0)
         {

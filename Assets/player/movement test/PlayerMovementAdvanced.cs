@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerMovementAdvanced : NetworkBehaviour
 {
+    public RoundCounter rc;
+    public TextMeshProUGUI roundTxt;
+
     [Header("Networking")]
     NetworkObject networkself;
 
@@ -83,6 +87,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void Start()
     {
+        rc = GameObject.FindGameObjectWithTag("NetworkFunctions").GetComponent<RoundCounter>();
         nO = GetComponent<NetworkObject>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -101,6 +106,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void Update()
     {
+        UpdateRoundUI();
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         if (networkself.IsLocalPlayer)
@@ -337,5 +343,10 @@ public class PlayerMovementAdvanced : NetworkBehaviour
             }
 
         }
+    }
+
+    void UpdateRoundUI()
+    {
+        roundTxt.text = rc.currentRound.Value.ToString();
     }
 }

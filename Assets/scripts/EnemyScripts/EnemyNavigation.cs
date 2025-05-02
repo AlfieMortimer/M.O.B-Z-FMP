@@ -7,8 +7,10 @@ public class EnemyNavigation : NetworkBehaviour
     GameObject[] playerObjects;
     public EnemySpawner mySpawner;
 
+    public Animator animator;
+
     bool inSpawnRoom;
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     private void Start()
     {
        agent = GetComponent<NavMeshAgent>();
@@ -24,8 +26,29 @@ public class EnemyNavigation : NetworkBehaviour
     }
     private void Update()
     {
-        movementTarget = GetClosestPlayer(playerObjects);
-        agent.destination = movementTarget.transform.position;
+        SpawnChecks();
+    }
+
+    public void SpawnChecks()
+    {
+        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
+
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Spawn")
+        {
+            agent.isStopped = true;
+
+        }
+        else
+        {
+            agent.isStopped = false;
+
+            if (inSpawnRoom == false)
+            {
+                movementTarget = GetClosestPlayer(playerObjects);
+                agent.destination = movementTarget.transform.position;
+            }
+        }
     }
 
     public void FindMySpawn(bool spawnroom, EnemySpawner spawner)
