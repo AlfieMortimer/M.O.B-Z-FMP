@@ -1198,6 +1198,7 @@ GameObject:
   - component: {fileID: 609736936}
   - component: {fileID: 609736935}
   - component: {fileID: 609736934}
+  - component: {fileID: 609736938}
   - component: {fileID: 609736933}
   m_Layer: 0
   m_Name: wallbuy
@@ -1218,6 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3210b7c99957754683020a8ab15aa5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   weaponCode: 2
   cost: 0
 --- !u!136 &609736934
@@ -1311,6 +1313,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1818178377}
   m_LocalEulerAnglesHint: {x: -93.338, y: 0, z: 0}
+--- !u!114 &609736938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609736932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1597439964
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &987576363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1638,7 @@ GameObject:
   - component: {fileID: 1818178374}
   m_Layer: 8
   m_Name: weapontrigger
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovementAdvanced : NetworkBehaviour
@@ -361,13 +360,13 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
         }
 
-        if (other.tag == "weapon" && no.IsOwner)
+        if (other.tag == "Weapon" && no.IsOwner)
         {
             WallPurchasable wp = other.GetComponentInChildren<WallPurchasable>();
             PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
             if (points != null && wp != null)
             {
-               /* buyText.gameObject.SetActive(true);
+                buyText.gameObject.SetActive(true);
                 buyText.text = $"Press {KeyCode.E} to purchase for {wp.cost}";
                 if (Input.GetKeyDown(KeyCode.E) && wp.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
                 {
@@ -394,7 +393,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
                         weapons.stats.ChangeWeaponStats(wp.weaponCode);
                         weapons.weaponOne = weapons.stats.magazineSize;
                     } 
-                } */
+                }
             }
         }
 
