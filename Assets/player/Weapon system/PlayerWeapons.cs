@@ -135,7 +135,14 @@ public class PlayerWeapons : NetworkBehaviour
             {
                 Debug.Log("You have hit an enemy");
                 enemydamage = true;
-                rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(Convert.ToInt32(nO.OwnerClientId.ToString()), stats.damage);
+                if(rayHit.collider.gameObject.layer == 9)
+                {
+                    rayHit.collider.GetComponentInParent<BasicEnemyStats>().TakeDamageRpc(Convert.ToInt32(nO.OwnerClientId.ToString()), stats.damage);
+                }
+                else
+                {
+                    rayHit.collider.GetComponent<BasicEnemyStats>().TakeDamageRpc(Convert.ToInt32(nO.OwnerClientId.ToString()), stats.damage);
+                }
                 UpdatePointsUI();
             }
         }

@@ -16,7 +16,7 @@ namespace Enemy
             enemy.animator.speed = 1;
             enemy.animator.Play("Zombie Attack", 0, 0);
             enemy.animator.speed = 1;
-
+            enemy.en.agent.velocity = new Vector3(0,0,0);
         }
 
         public override void Exit()

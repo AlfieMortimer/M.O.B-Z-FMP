@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovementAdvanced : NetworkBehaviour
@@ -69,9 +70,13 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-    NetworkObject nO;
+    NetworkObject no;
+
+    PlayerWeapons weapons;
 
     bool RPCResponse;
+
+    public TextMeshProUGUI buyText;
 
     public MovementState state;
     public enum MovementState
@@ -87,8 +92,9 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void Start()
     {
+        weapons = GetComponent<PlayerWeapons>();
         rc = GameObject.FindGameObjectWithTag("NetworkFunctions").GetComponent<RoundCounter>();
-        nO = GetComponent<NetworkObject>();
+        no = GetComponent<NetworkObject>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -325,15 +331,26 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(StayInArea(other));
+    }
     public void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Door" && nO.IsOwner)
+        StartCoroutine(StayInArea(other));
+    }
+
+    public IEnumerator StayInArea(Collider other)
+    {
+        if (other.tag == "Door")
         {
             Interactable interact = other.GetComponentInChildren<Interactable>();
             PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
             Debug.Log("Points");
             if (points != null && interact != null)
             {
+                buyText.gameObject.SetActive(true);
+                buyText.text = $"Press {KeyCode.E} to purchase for {interact.cost}";
                 if (Input.GetKeyDown(KeyCode.E) && interact.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
                 {
                     Debug.Log("Door Removed");
@@ -343,6 +360,50 @@ public class PlayerMovementAdvanced : NetworkBehaviour
             }
 
         }
+
+        if (other.tag == "weapon" && no.IsOwner)
+        {
+            WallPurchasable wp = other.GetComponentInChildren<WallPurchasable>();
+            PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+            if (points != null && wp != null)
+            {
+               /* buyText.gameObject.SetActive(true);
+                buyText.text = $"Press {KeyCode.E} to purchase for {wp.cost}";
+                if (Input.GetKeyDown(KeyCode.E) && wp.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
+                {
+                    Debug.Log("Door Removed");
+                    points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -wp.cost);
+                    if (weapons.HeldWeapon && weapons.weaponTwo == 0)
+                    {
+                        weapons.HeldWeapon = false;
+                        weapons.weaponTwo = wp.weaponCode;
+                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
+                        weapons.weaponTwo = weapons.stats.magazineSize;
+                    }
+                    else if(weapons.HeldWeapon && weapons.weaponTwo < 0)
+                    {
+                        weapons.HeldWeapon = false;
+                        weapons.weaponOne = wp.weaponCode;
+                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
+                        weapons.weaponTwo = weapons.stats.magazineSize;
+                    }
+                    else
+                    {
+                        weapons.HeldWeapon = true;
+                        weapons.weaponTwo = wp.weaponCode;
+                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
+                        weapons.weaponOne = weapons.stats.magazineSize;
+                    } 
+                } */
+            }
+        }
+
+        yield break;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        buyText.gameObject.SetActive(false);
     }
 
     void UpdateRoundUI()

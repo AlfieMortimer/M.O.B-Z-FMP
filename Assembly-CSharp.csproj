@@ -64,8 +64,11 @@
   <ItemGroup>
     <Compile Include="Assets\plugin clean up\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\scripts\ENEMYfsm\StateMachine.cs" />
+    <Compile Include="Assets\scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\scripts\RoundCounter.cs" />
     <Compile Include="Assets\plugin clean up\ModularFirstPersonController\FirstPersonController\FirstPersonController.cs" />
     <Compile Include="Assets\player\Weapon system\PlayerWeapons.cs" />
+    <Compile Include="Assets\EnemyTrigger.cs" />
     <Compile Include="Assets\player\Player State Machine\State machine\idleState.cs" />
     <Compile Include="Assets\player\movement test\PlayerMovementAdvanced.cs" />
     <Compile Include="Assets\scripts\BasicEnemyStats.cs" />
@@ -77,7 +80,6 @@
     <Compile Include="Assets\scripts\Interactable.cs" />
     <Compile Include="Assets\player\movement test\Sliding.cs" />
     <Compile Include="Assets\scripts\ENEMYfsm\RunState.cs" />
-    <Compile Include="Assets\RoundCounter.cs" />
     <Compile Include="Assets\player\Player State Machine\State machine\slideState.cs" />
     <Compile Include="Assets\player\Player State Machine\playerscript.cs" />
     <Compile Include="Assets\scripts\ChangeGameUsername.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\scripts\EnableCameraByOwnership.cs" />
     <Compile Include="Assets\player\Player State Machine\State machine\deathState.cs" />
     <Compile Include="Assets\scripts\ENEMYfsm\State.cs" />
+    <Compile Include="Assets\WallPurchasable.cs" />
     <Compile Include="Assets\player\Player State Machine\State machine\StateP.cs" />
     <Compile Include="Assets\scripts\NetworkFunctions.cs" />
     <Compile Include="Assets\scripts\points system\UiPointsClient.cs" />

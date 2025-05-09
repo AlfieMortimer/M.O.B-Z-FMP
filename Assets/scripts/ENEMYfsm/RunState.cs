@@ -29,7 +29,7 @@ namespace Enemy
         public override void LogicUpdate()
         {
             CheckState();
-            animspeed();
+            //animspeed();
             base.LogicUpdate();
         }
 
@@ -50,11 +50,11 @@ namespace Enemy
 
         }
 
-        void animspeed()
+        /* void animspeed()
         {
             float velocity = enemy.en.agent.velocity.magnitude / enemy.en.agent.speed;
             enemy.animator.speed = velocity;
            
-        }
+        } */
     }
 }

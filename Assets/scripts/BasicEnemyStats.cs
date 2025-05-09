@@ -15,6 +15,7 @@ public class BasicEnemyStats : NetworkBehaviour
     UiPointsClient UIPoints;
     RoundCounter rc;
     public EnemyNavigation en;
+    public int damage;
 
     public StateMachine sm;
 

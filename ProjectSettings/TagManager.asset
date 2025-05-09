@@ -9,6 +9,7 @@ TagManager:
   - sessionCode
   - Enemy
   - Door
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -19,9 +20,9 @@ TagManager:
   - Ground
   - Target
   - Interactable
-  - 
-  - 
-  - 
+  - HurtPlayer
+  - Player
+  - IgnoreNavmesh
   - 
   - 
   - 
