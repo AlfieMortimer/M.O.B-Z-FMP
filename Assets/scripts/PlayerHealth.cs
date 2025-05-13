@@ -86,10 +86,7 @@ public class PlayerHealth : NetworkBehaviour
     void NextState()
     {
         string methodName = state.ToString() + "State";
-        System.Reflection.MethodInfo info =
-            GetType().GetMethod(methodName,
-                                System.Reflection.BindingFlags.NonPublic |
-                                System.Reflection.BindingFlags.Instance);
+        System.Reflection.MethodInfo info = GetType().GetMethod(methodName,System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         StartCoroutine((IEnumerator)info.Invoke(this, null));
     }
 

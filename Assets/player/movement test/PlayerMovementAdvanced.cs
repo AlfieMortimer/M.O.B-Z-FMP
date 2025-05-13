@@ -59,7 +59,8 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
-    
+
+    public Animator anim;
 
     public Transform orientation;
 
@@ -80,6 +81,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     public MovementState state;
     public enum MovementState
     {
+        idle,
         walking,
         sprinting,
         crouching,
@@ -131,6 +133,21 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+
+        if (grounded && (horizontalInput <= .1f && verticalInput <= .1f) && (horizontalInput >= -.1f && verticalInput >= -.1f))
+        {
+            anim.Play("Idle");
+        }
+
+        if (grounded && horizontalInput >= .1f || verticalInput >= .1f || horizontalInput <= -.1f || verticalInput <= -.1f)
+        {
+            anim.Play("Run");
+        }
+
+        if (!grounded)
+        {
+            anim.Play("Falling");
+        }
     }
 
     private void FixedUpdate()
@@ -189,7 +206,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         }
 
         // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
+        else if(grounded && Input.GetKey(sprintKey) && rb.linearVelocity != new Vector3(0, 0, 0))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
@@ -203,13 +220,19 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         }
 
         // Mode - Air
-        else
+        else if (!grounded)
         {
             state = MovementState.air;
         }
 
+        //Mode - Idle
+        else
+        {
+            state = MovementState.idle;
+        }
+
         // check if desiredMoveSpeed has changed drastically
-        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());
@@ -301,6 +324,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     private void Jump()
     {
         exitingSlope = true;
+        //anim.Play("Jump");
 
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -409,4 +433,5 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     {
         roundTxt.text = rc.currentRound.Value.ToString();
     }
+
 }

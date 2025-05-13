@@ -8,6 +8,7 @@ public class EnableCameraByOwnership : NetworkBehaviour
     public GameObject myCamera;
     public NetworkObject NetworkSelf;
     public NetworkFunctions NetworkFunctions;
+    public GameObject playermodel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,6 +48,7 @@ public class EnableCameraByOwnership : NetworkBehaviour
         {
             print("IsOwner: " + NetworkSelf.IsOwner + " - MenuScene: " + NetworkFunctions.menuScene);
             myCamera.gameObject.SetActive(true);
+            playermodel.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -54,8 +56,7 @@ public class EnableCameraByOwnership : NetworkBehaviour
         {
             print("IsOwner: " + NetworkSelf.IsOwner + " - MenuScene: " + NetworkFunctions.menuScene);
             myCamera.gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            playermodel.SetActive(true);
         }
     }
 
