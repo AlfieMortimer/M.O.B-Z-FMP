@@ -1,14 +1,20 @@
-using UnityEngine;
+using System;
 using Unity.Netcode;
-public class Interactable : NetworkBehaviour
+using UnityEngine;
+public class Interactable : NetworkBehaviour, IInteractable
 {
-    public GameObject myTrigger;
     public int cost;
     public bool interactable;
     public GameObject[] mySpawners;
 
     public PointsCollection points;
     public UiPointsClient UIPoints;
+
+    public void Interact(GameObject p)
+    {
+        removeDoorRpc();
+
+    }
     private void Start()
     {
         points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
@@ -19,12 +25,17 @@ public class Interactable : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void removeDoorRpc()
     {
-        foreach(GameObject spawner in mySpawners)
+        PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+        if (cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
         {
-            spawner.SetActive(true);
+            points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -cost);
+            foreach (GameObject spawner in mySpawners)
+            {
+                spawner.SetActive(true);
+            }
+
+            gameObject.SetActive(false);
         }
-        
-        myTrigger.SetActive(false);
-        gameObject.SetActive(false);
+
     }
 }

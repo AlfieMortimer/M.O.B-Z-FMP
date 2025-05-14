@@ -36,7 +36,7 @@ public class RoundCounter : NetworkBehaviour
     {
         if (gameStart)
         {
-            Debug.Log($"checking for round end: CurrentEnemyCount - {currentEnemyCount} + enemies left to spawn {enemiesLeftToSpawn}");
+            //Debug.Log($"checking for round end: CurrentEnemyCount - {currentEnemyCount} + enemies left to spawn {enemiesLeftToSpawn}");
             if (enemiesLeftToSpawn <= 0 && currentEnemyCount <= 0)
             {
                 Debug.Log("Next Round Started");

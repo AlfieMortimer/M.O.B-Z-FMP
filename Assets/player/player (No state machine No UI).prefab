@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 6000037270154731108}
   - component: {fileID: 2430154835118188582}
   - component: {fileID: 6167934445126390920}
+  - component: {fileID: 2809168065252285148}
   m_Layer: 10
   m_Name: player (No state machine No UI)
   m_TagString: Player
@@ -1071,6 +1072,20 @@ MonoBehaviour:
   health:
     m_InternalValue: 0
   state: 0
+--- !u!114 &2809168065252285148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4724776188444546644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e2193ece1e8e743a8fd796a520f7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorSource: {fileID: 5440217943844818591}
+  InteractRange: 2
 --- !u!1 &5686846562195276077
 GameObject:
   m_ObjectHideFlags: 0

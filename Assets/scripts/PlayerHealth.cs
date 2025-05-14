@@ -39,6 +39,7 @@ public class PlayerHealth : NetworkBehaviour
         while (state == State.Alive && IsServer)
         {
             //check for alive. if not go to knocked state
+
             yield return 0;
         }
         Debug.Log("Alive: Exit");
@@ -67,18 +68,19 @@ public class PlayerHealth : NetworkBehaviour
     {
         if (health.Value <= 0 && knocked == false)
         {
-
+            knocked = true;
+            state = State.Knocked;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log(other.gameObject.layer);
+        //Debug.Log(other.gameObject.layer);
         if (other.gameObject.layer == 9)
         {
             gameObject.GetComponent<PlayerHealth>().LoseHealthRPC(other.gameObject.GetComponentInParent<BasicEnemyStats>().damage);
-            Debug.Log("Damage?");
+            //Debug.Log("Damage?");
         }
     }
 

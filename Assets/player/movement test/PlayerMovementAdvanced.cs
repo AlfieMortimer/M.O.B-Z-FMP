@@ -374,12 +374,6 @@ public class PlayerMovementAdvanced : NetworkBehaviour
             {
                 buyText.gameObject.SetActive(true);
                 buyText.text = $"Press {KeyCode.E} to purchase for {interact.cost}";
-                if (Input.GetKeyDown(KeyCode.E) && interact.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
-                {
-                    Debug.Log("Door Removed");
-                    points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -interact.cost);
-                    interact.removeDoorRpc();
-                }
             }
 
         }
@@ -392,38 +386,13 @@ public class PlayerMovementAdvanced : NetworkBehaviour
             {
                 buyText.gameObject.SetActive(true);
                 buyText.text = $"Press {KeyCode.E} to purchase for {wp.cost}";
-                if (Input.GetKeyDown(KeyCode.E) && wp.cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
-                {
-                    Debug.Log("Door Removed");
-                    points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -wp.cost);
-                    if (weapons.HeldWeapon && weapons.weaponTwo == 0)
-                    {
-                        weapons.HeldWeapon = false;
-                        weapons.weaponTwo = wp.weaponCode;
-                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
-                        weapons.weaponTwo = weapons.stats.magazineSize;
-                    }
-                    else if(weapons.HeldWeapon && weapons.weaponTwo < 0)
-                    {
-                        weapons.HeldWeapon = false;
-                        weapons.weaponOne = wp.weaponCode;
-                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
-                        weapons.weaponTwo = weapons.stats.magazineSize;
-                    }
-                    else
-                    {
-                        weapons.HeldWeapon = true;
-                        weapons.weaponTwo = wp.weaponCode;
-                        weapons.stats.ChangeWeaponStats(wp.weaponCode);
-                        weapons.weaponOne = weapons.stats.magazineSize;
-                    } 
-                }
+                
             }
         }
 
         yield break;
     }
-
+  
     public void OnTriggerExit(Collider other)
     {
         buyText.gameObject.SetActive(false);
@@ -432,6 +401,33 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     void UpdateRoundUI()
     {
         roundTxt.text = rc.currentRound.Value.ToString();
+    }
+
+    void changeweapons(Collider other)
+    {
+        WallPurchasable wp = other.GetComponentInChildren<WallPurchasable>();
+
+        if (weapons.HeldWeapon && weapons.weaponTwo == 0)
+        {
+            weapons.HeldWeapon = false;
+            weapons.weaponTwo = wp.weaponCode;
+            weapons.stats.ChangeWeaponStats(wp.weaponCode);
+            weapons.weaponTwo = weapons.stats.magazineSize;
+        }
+        else if (weapons.HeldWeapon && weapons.weaponTwo < 0)
+        {
+            weapons.HeldWeapon = false;
+            weapons.weaponOne = wp.weaponCode;
+            weapons.stats.ChangeWeaponStats(wp.weaponCode);
+            weapons.weaponTwo = weapons.stats.magazineSize;
+        }
+        else
+        {
+            weapons.HeldWeapon = true;
+            weapons.weaponTwo = wp.weaponCode;
+            weapons.stats.ChangeWeaponStats(wp.weaponCode);
+            weapons.weaponOne = weapons.stats.magazineSize;
+        }
     }
 
 }
