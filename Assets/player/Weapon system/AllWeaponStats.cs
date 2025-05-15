@@ -69,7 +69,7 @@ public class AllWeaponStats : ScriptableObject
 
     public void RifleSwitch()
     {
-        damage = 500;
+        damage = 10;
         timeBetweenShooting = .1f;
         spread = 0;
         range = 100;
