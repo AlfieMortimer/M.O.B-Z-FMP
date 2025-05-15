@@ -1,13 +1,20 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using static PlayerMovementAdvanced;
 
 public class PlayerHealth : NetworkBehaviour
 {
     [SerializeField]
     NetworkVariable<int> health = new NetworkVariable<int>();
-    NetworkVariable<float> knockedHealh = new NetworkVariable<float>();
+    NetworkVariable<float> KnockedHealth = new NetworkVariable<float>();
 
+    //work out how to change network variable write permissions.
+    //alternatively change health in a server RPC method. Probably easier.
+
+    Rigidbody rb;
+    PlayerMovementAdvanced pma;
     bool knocked = false;
 
     public enum State
@@ -19,15 +26,35 @@ public class PlayerHealth : NetworkBehaviour
 
     public State state;
 
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        pma = GetComponent<PlayerMovementAdvanced>();
+        state = State.Alive;
+        NextState();
+    }
+
     IEnumerator KnockedState()
     {
         Debug.Log("knocked: Enter");
-        while (state == State.Knocked && IsServer)
+        while (state == State.Knocked)
         {
-            knockedHealh.Value -= Time.deltaTime;
+            transform.localScale = new Vector3(transform.localScale.x, .60f, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            pma.desiredMoveSpeed = pma.crouchSpeed;
+
+            KnockedHealth.Value -= Time.deltaTime;
             yield return 0;
 
+            if(health.Value > 0)
+            {
+                state = State.Alive;
+                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                knocked = false;
+            }
+
             KillPlayer();
+
         }
         Debug.Log("Knocked: Exit");
         NextState();
@@ -36,8 +63,13 @@ public class PlayerHealth : NetworkBehaviour
     IEnumerator AliveState()
     {
         Debug.Log("Alive: Enter");
-        while (state == State.Alive && IsServer)
+        while (state == State.Alive)
         {
+            if (health.Value <= 0 && knocked == false)
+            {
+                state = State.Knocked;
+                knocked = true;
+            }
             //check for alive. if not go to knocked state
             yield return 0;
         }
@@ -47,14 +79,9 @@ public class PlayerHealth : NetworkBehaviour
     private void Awake()
     {
         health.Value = 50;
-        knockedHealh.Value = 100;
+        KnockedHealth.Value = 20;
     }
 
-    private void Start()
-    {
-        state = State.Alive;
-        NextState();
-    }
 
     [Rpc(SendTo.Server)]
     public void LoseHealthRPC(int damage)
@@ -65,9 +92,14 @@ public class PlayerHealth : NetworkBehaviour
 
     private void Update()
     {
-        if (health.Value <= 0 && knocked == false)
-        {
+        revivePlayer();
+    }
 
+    public void revivePlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            health.Value = 50;
         }
     }
 
@@ -92,7 +124,7 @@ public class PlayerHealth : NetworkBehaviour
 
     void KillPlayer()
     {
-        if (knockedHealh.Value <= 0)
+        if (KnockedHealth.Value <= 0)
         {
             state = State.Dead;
         }

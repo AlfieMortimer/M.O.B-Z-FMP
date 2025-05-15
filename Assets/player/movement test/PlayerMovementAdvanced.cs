@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 public class PlayerMovementAdvanced : NetworkBehaviour
@@ -26,7 +27,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     public float sprintSpeed;
     public float slideSpeed;
 
-    private float desiredMoveSpeed;
+    public float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
     public float speedIncreaseMultiplier;
@@ -61,6 +62,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     private bool exitingSlope;
 
     public Animator anim;
+    public NetworkAnimator nanim;
 
     public Transform orientation;
 
@@ -71,10 +73,9 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     Rigidbody rb;
     NetworkObject no;
+    PlayerHealth ph;
 
     PlayerWeapons weapons;
-
-    bool RPCResponse;
 
     public TextMeshProUGUI buyText;
 
@@ -93,6 +94,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void Start()
     {
+        ph = GetComponent<PlayerHealth>();
         weapons = GetComponent<PlayerWeapons>();
         rc = GameObject.FindGameObjectWithTag("NetworkFunctions").GetComponent<RoundCounter>();
         no = GetComponent<NetworkObject>();

@@ -31,7 +31,7 @@ public class EnemyNavigation : NetworkBehaviour
 
     public void SpawnChecks()
     {
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
 
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Spawn")

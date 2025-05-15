@@ -59,10 +59,10 @@ public class EnemySpawner : NetworkBehaviour
             if (roundCounter.enemiesLeftToSpawn <= 0 && roundCounter.currentEnemyCount <= 0)
             {
                 roundStartDelay = roundStartDelayvalue;
-                Debug.Log("roundstartdelay reset");
+                //Debug.Log("roundstartdelay reset");
             }
 
-                Debug.Log("Round Started");
+                //Debug.Log("Round Started");
             if (roundCounter != null && roundCounter.enemiesLeftToSpawn > 0 && roundCounter.currentEnemyCount < roundCounter.zombieLimit && enemySpawnDelay <= 0)
             {
                 
@@ -78,7 +78,7 @@ public class EnemySpawner : NetworkBehaviour
         else if (roundStartDelay >= 0)
         {
             roundStartDelay -= Time.deltaTime;
-            Debug.Log(roundStartDelay);
+            //Debug.Log(roundStartDelay);
         }
     }
 }
