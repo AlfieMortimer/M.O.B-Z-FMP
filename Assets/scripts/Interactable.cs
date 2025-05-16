@@ -34,8 +34,14 @@ public class Interactable : NetworkBehaviour, IInteractable
                 spawner.SetActive(true);
             }
 
-            gameObject.SetActive(false);
+            RemoveDoorModelRPC();
         }
 
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void RemoveDoorModelRPC()
+    {
+        gameObject.SetActive(false);
     }
 }

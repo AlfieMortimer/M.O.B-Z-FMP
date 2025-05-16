@@ -45,8 +45,11 @@ public class EnemyNavigation : NetworkBehaviour
 
             if (inSpawnRoom == false)
             {
-                movementTarget = GetClosestPlayer(playerObjects);
-                agent.destination = movementTarget.transform.position;
+                if(GetClosestPlayer(playerObjects) != null)
+                {
+                    movementTarget = GetClosestPlayer(playerObjects);
+                    agent.destination = movementTarget.transform.position;
+                }
             }
         }
     }
@@ -64,16 +67,34 @@ public class EnemyNavigation : NetworkBehaviour
         Vector3 currentPosition = transform.position;
         foreach (GameObject potentialTarget in players)
         {
-            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
+            if (checkPlayerState(potentialTarget))
             {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = potentialTarget;
+                Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget;
+                }
             }
         }
 
         return bestTarget;
+    }
+
+    public bool checkPlayerState(GameObject player)
+    {
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+
+        if (ph.state == PlayerHealth.State.Knocked)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
     }
 
 }

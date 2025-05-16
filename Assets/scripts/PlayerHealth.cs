@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using static PlayerMovementAdvanced;
 
-public class PlayerHealth : NetworkBehaviour
+public class PlayerHealth : NetworkBehaviour, IInteractable
 {
     [SerializeField]
     NetworkVariable<int> health = new NetworkVariable<int>();
@@ -28,10 +28,19 @@ public class PlayerHealth : NetworkBehaviour
 
     public void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         pma = GetComponent<PlayerMovementAdvanced>();
         state = State.Alive;
         NextState();
+    }
+
+    public void Interact(GameObject p)
+    {
+        if(state == State.Knocked)
+        {
+            revivePlayerRPC();
+        }
     }
 
     IEnumerator KnockedState()
@@ -40,10 +49,10 @@ public class PlayerHealth : NetworkBehaviour
         while (state == State.Knocked)
         {
             transform.localScale = new Vector3(transform.localScale.x, .60f, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-            pma.desiredMoveSpeed = pma.crouchSpeed;
+            pma.readyToJump = false;
+            pma.desiredMoveSpeed = 0;
 
-            KnockedHealth.Value -= Time.deltaTime;
+            KnockedHealthRPC();
             yield return 0;
 
             if(health.Value > 0)
@@ -51,6 +60,7 @@ public class PlayerHealth : NetworkBehaviour
                 state = State.Alive;
                 transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
                 knocked = false;
+                pma.readyToJump = true;
             }
 
             KillPlayer();
@@ -76,6 +86,18 @@ public class PlayerHealth : NetworkBehaviour
         Debug.Log("Alive: Exit");
         NextState();
     }
+
+    IEnumerator DeathState()
+    {
+        Debug.Log("Death: Enter");
+        while (state == State.Dead)
+        {
+
+            yield return 0;
+        }
+        Debug.Log("Death: Exit");
+        NextState();
+    }
     private void Awake()
     {
         health.Value = 50;
@@ -90,17 +112,11 @@ public class PlayerHealth : NetworkBehaviour
         Debug.Log(health.Value);
     }
 
-    private void Update()
-    {
-        revivePlayer();
-    }
 
-    public void revivePlayer()
+    [Rpc(SendTo.Server)]
+    public void revivePlayerRPC()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
             health.Value = 50;
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -124,9 +140,15 @@ public class PlayerHealth : NetworkBehaviour
 
     void KillPlayer()
     {
-        if (KnockedHealth.Value <= 0)
+        /*if (KnockedHealth.Value <= 0)
         {
             state = State.Dead;
-        }
+        } */
+    }
+
+    [Rpc(SendTo.Server)]
+    public void KnockedHealthRPC()
+    {
+        KnockedHealth.Value -= Time.deltaTime;
     }
 }

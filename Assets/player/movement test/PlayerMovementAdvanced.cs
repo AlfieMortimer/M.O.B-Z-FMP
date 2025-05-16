@@ -39,7 +39,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool readyToJump;
+    public bool readyToJump;
 
     [Header("Crouching")]
     public float crouchSpeed;
@@ -154,7 +154,10 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if(ph.state != PlayerHealth.State.Knocked)
+        {
             MovePlayer();
+        }
     }
 
     private void MyInput()

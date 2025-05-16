@@ -13,6 +13,7 @@ public class NetworkFunctions : NetworkBehaviour
     public bool menuScene;
     string lastWorkingCode;
     TextMeshProUGUI codeText;
+    GameObject[] playerObjects;
     //Singleton Creation
     public static NetworkFunctions instance;
     RoundCounter roundCounter;
@@ -80,6 +81,7 @@ public class NetworkFunctions : NetworkBehaviour
     {
         nM = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
         roundCounter = gameObject.GetComponent<RoundCounter>();
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
     }
 
     private void Update()
@@ -91,11 +93,16 @@ public class NetworkFunctions : NetworkBehaviour
             //SendClientsToNewScene("LoadnewSceneTests");
             menuScene = false;
         }
+        if (menuScene == false)
+        {
+            checkPlayersAlive();
+        }
     }
 
     //sends all clients to a new scene and spawns new players if needed
     public void SendClientsToNewScene(string sceneName)
     {
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         Debug.Log(nM.IsHost);
         if (nM.IsHost)
@@ -112,5 +119,47 @@ public class NetworkFunctions : NetworkBehaviour
 
         }
 
+    }
+
+    public void checkPlayersAlive()
+    {
+        int knockCount = 0;
+        int playerCount = 0;
+        foreach(GameObject players in playerObjects)
+        {
+            playerCount++;
+            PlayerHealth ph = players.GetComponent<PlayerHealth>();
+            Debug.Log($"{playerCount} PlayerCount as shown by variable");
+
+            Debug.Log($"{playerObjects.Length} playerObjects Length");
+
+            if (ph.state == PlayerHealth.State.Knocked)
+            {
+                knockCount++;
+                Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+            }
+            else
+            {
+                knockCount--;
+                Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+            }
+
+        }
+        if (playerCount > 0)
+        {
+            DeathCheck(knockCount, playerCount);
+            Debug.Log("DeathCheck Working");
+        }
+        
+    }
+    public void DeathCheck(int knockCount, int playerCount)
+    {
+        if (knockCount == playerCount && SceneManager.GetActiveScene().name == /*Current Level name*/ "ENemyTesting")
+        {
+            //End Game
+            Debug.Log($"All Players Down {knockCount} : {playerCount}");
+            SendClientsToNewScene("DeathScreen");
+            menuScene = true;
+        }
     }
 }
