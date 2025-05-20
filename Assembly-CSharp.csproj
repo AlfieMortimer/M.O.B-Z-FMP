@@ -74,6 +74,7 @@
     <Compile Include="Assets\player\movement test\PlayerMovementAdvanced.cs" />
     <Compile Include="Assets\scripts\BasicEnemyStats.cs" />
     <Compile Include="Assets\player\Weapon system\AllWeaponStats.cs" />
+    <Compile Include="Assets\cursorControl.cs" />
     <Compile Include="Assets\scripts\NetworkManagerUpgrade.cs" />
     <Compile Include="Assets\scripts\EnemyScripts\EnemySpawner.cs" />
     <Compile Include="Assets\scripts\ENEMYfsm\IdleState.cs" />

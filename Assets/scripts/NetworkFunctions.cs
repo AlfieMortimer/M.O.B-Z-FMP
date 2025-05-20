@@ -64,11 +64,20 @@ public class NetworkFunctions : NetworkBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Optomise at some point
         if (GameObject.Find("CodeDisplay") && menuScene == false)
         {
             codeText = GameObject.Find("CodeDisplay").GetComponent<TextMeshProUGUI>();
             codeText.text = "Code: " + lastWorkingCode;
+        }
+        if(menuScene == true)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+            UnityEngine.Cursor.visible = true;
+        }
+        else if (menuScene == false && scene.name == "ENemyTesting")
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
         }
         //And this gameobject find needs optomising at some point
         /*else if (menuScene == true && GameObject.Find("CreateButton"))
@@ -103,20 +112,39 @@ public class NetworkFunctions : NetworkBehaviour
     public void SendClientsToNewScene(string sceneName)
     {
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log(sceneName);
         Debug.Log(nM.IsHost);
         if (nM.IsHost)
         {
+            if (sceneName == "ENemyTesting")
+            {
+                Debug.Log(sceneName);
+                menuScene = false;
+                roundCounter.gameStart = true;
+                Debug.Log("Host has loaded menuScene on false");
+                Debug.Log(menuScene);
+            }
+            else
+            {
+                menuScene = true;
+                roundCounter.gameStart = false;
+                Debug.Log(menuScene);
+            }
             nM.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-            menuScene = false;
-            roundCounter.gameStart = true;
-            Debug.Log("Host has loaded menuScene on false");
         }
         else if (!nM.IsHost)
         {
-            menuScene = false;
-            Debug.Log("Client has loaded menuScene on false");
-
+            if (sceneName == "ENemyTesting")
+            {
+                menuScene = false;
+                roundCounter.gameStart = true;
+                Debug.Log("Host has loaded menuScene on false");
+            }
+            else
+            {
+                menuScene = true;
+                roundCounter.gameStart = false;
+            }
         }
 
     }
@@ -127,23 +155,25 @@ public class NetworkFunctions : NetworkBehaviour
         int playerCount = 0;
         foreach(GameObject players in playerObjects)
         {
-            playerCount++;
-            PlayerHealth ph = players.GetComponent<PlayerHealth>();
-            Debug.Log($"{playerCount} PlayerCount as shown by variable");
-
-            Debug.Log($"{playerObjects.Length} playerObjects Length");
-
-            if (ph.state == PlayerHealth.State.Knocked)
+            if (nM.IsConnectedClient || nM.IsHost)
             {
-                knockCount++;
-                Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
-            }
-            else
-            {
-                knockCount--;
-                Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
-            }
+                playerCount++;
+                PlayerHealth ph = players.GetComponent<PlayerHealth>();
+                Debug.Log($"{playerCount} PlayerCount as shown by variable");
 
+                Debug.Log($"{playerObjects.Length} playerObjects Length");
+
+                if (ph.state == PlayerHealth.State.Knocked)
+                {
+                    knockCount++;
+                    Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+                }
+                else
+                {
+                    knockCount--;
+                    Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+                }
+            }
         }
         if (playerCount > 0)
         {
@@ -158,7 +188,11 @@ public class NetworkFunctions : NetworkBehaviour
         {
             //End Game
             Debug.Log($"All Players Down {knockCount} : {playerCount}");
+            menuScene = true;
             SendClientsToNewScene("DeathScreen");
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+            UnityEngine.Cursor.visible = true;
+            Debug.Log(UnityEngine.Cursor.lockState);
             menuScene = true;
         }
     }

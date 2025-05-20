@@ -30,8 +30,6 @@ public class EnableCameraByOwnership : NetworkBehaviour
         if (activeScene != 0)
         {
             NetworkFunctions.menuScene = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
         else
         {
@@ -46,17 +44,20 @@ public class EnableCameraByOwnership : NetworkBehaviour
 
         if (NetworkSelf.IsOwner && NetworkFunctions.menuScene == false)
         {
-            print("IsOwner: " + NetworkSelf.IsOwner + " - MenuScene: " + NetworkFunctions.menuScene);
-            myCamera.gameObject.SetActive(true);
-            playermodel.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (myCamera != null)
+            {
+                myCamera.gameObject.SetActive(true);
+                playermodel.SetActive(false);
+            }
+            
         }
         else
         {
-            print("IsOwner: " + NetworkSelf.IsOwner + " - MenuScene: " + NetworkFunctions.menuScene);
-            myCamera.gameObject.SetActive(false);
-            playermodel.SetActive(true);
+            if (myCamera != null)
+            {
+                 myCamera.gameObject.SetActive(false);
+                 playermodel.SetActive(true);
+            }
         }
     }
 
@@ -78,13 +79,13 @@ public class EnableCameraByOwnership : NetworkBehaviour
         if (NetworkSelf.IsOwner && NetworkFunctions.menuScene == false)
         {
             myCamera.gameObject.SetActive(true);
-            Cursor.lockState = CursorLockMode.Locked;
+
 
         }
         else
         {
             myCamera.gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
+
 
         }
     }

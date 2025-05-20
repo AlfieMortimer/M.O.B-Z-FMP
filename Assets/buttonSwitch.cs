@@ -11,7 +11,27 @@ public class buttonSwitch : MonoBehaviour
     }
     public void LoadScene(string SceneName)
     {
-        nM.SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
+    }
+    public void ShutDownServer()
+    {
+        if (nM != null)
+        {
+            if (nM.IsServer)
+            {
+                NetworkManager.Singleton.Shutdown();
+            }
+        }
     }
 
+    public void ClientDisconnect()
+    {
+        if (nM != null)
+        {
+            if (nM.IsConnectedClient)
+            {
+                NetworkManager.Singleton.DisconnectClient(nM.LocalClientId);
+            }
+        }
+    }
 }

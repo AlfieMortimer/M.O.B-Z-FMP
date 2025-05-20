@@ -136,19 +136,19 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
-        if (grounded && (horizontalInput <= .1f && verticalInput <= .1f) && (horizontalInput >= -.1f && verticalInput >= -.1f))
+        if (grounded && (horizontalInput <= .1f && verticalInput <= .1f) && (horizontalInput >= -.1f && verticalInput >= -.1f) && IsOwner)
         {
-            anim.Play("Idle");
+            IdleRPC();
         }
 
-        if (grounded && horizontalInput >= .1f || verticalInput >= .1f || horizontalInput <= -.1f || verticalInput <= -.1f)
+        if (grounded && horizontalInput >= .1f || verticalInput >= .1f || horizontalInput <= -.1f || verticalInput <= -.1f && IsOwner)
         {
-            anim.Play("Run");
+            RunRPC();
         }
 
-        if (!grounded)
+        if (!grounded && IsOwner)
         {
-            anim.Play("Falling");
+            FallRPC();
         }
     }
 
@@ -435,4 +435,17 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         }
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void RunRPC()
+    {
+        anim.Play("Run");
+    }
+    public void FallRPC()
+    {
+        anim.Play("Falling");
+    }
+    public void IdleRPC()
+    {
+        anim.Play("Idle");
+    }
 }
