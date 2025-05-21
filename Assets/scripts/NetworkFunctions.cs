@@ -74,7 +74,7 @@ public class NetworkFunctions : NetworkBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             UnityEngine.Cursor.visible = true;
         }
-        else if (menuScene == false && scene.name == "ENemyTesting")
+        else if (menuScene == false && scene.name == "Map01")
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
@@ -98,7 +98,7 @@ public class NetworkFunctions : NetworkBehaviour
         //Testing Only remove after.
         if (Input.GetKeyDown("0") && nM.IsHost)
         {
-            SendClientsToNewScene("ENemyTesting");
+            SendClientsToNewScene("Map01");
             //SendClientsToNewScene("LoadnewSceneTests");
             menuScene = false;
         }
@@ -116,7 +116,7 @@ public class NetworkFunctions : NetworkBehaviour
         Debug.Log(nM.IsHost);
         if (nM.IsHost)
         {
-            if (sceneName == "ENemyTesting")
+            if (sceneName == "Map01")
             {
                 Debug.Log(sceneName);
                 menuScene = false;
@@ -134,7 +134,7 @@ public class NetworkFunctions : NetworkBehaviour
         }
         else if (!nM.IsHost)
         {
-            if (sceneName == "ENemyTesting")
+            if (sceneName == "Map01")
             {
                 menuScene = false;
                 roundCounter.gameStart = true;
@@ -159,40 +159,40 @@ public class NetworkFunctions : NetworkBehaviour
             {
                 playerCount++;
                 PlayerHealth ph = players.GetComponent<PlayerHealth>();
-                Debug.Log($"{playerCount} PlayerCount as shown by variable");
+                //Debug.Log($"{playerCount} PlayerCount as shown by variable");
 
-                Debug.Log($"{playerObjects.Length} playerObjects Length");
+               //Debug.Log($"{playerObjects.Length} playerObjects Length");
 
                 if (ph.state == PlayerHealth.State.Knocked)
                 {
                     knockCount++;
-                    Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+                    //Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
                 }
                 else
                 {
                     knockCount--;
-                    Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
+                    //Debug.Log($"{playerCount} players are present. {knockCount} are currently downed");
                 }
             }
         }
         if (playerCount > 0)
         {
             DeathCheck(knockCount, playerCount);
-            Debug.Log("DeathCheck Working");
+            //Debug.Log("DeathCheck Working");
         }
         
     }
     public void DeathCheck(int knockCount, int playerCount)
     {
-        if (knockCount == playerCount && SceneManager.GetActiveScene().name == /*Current Level name*/ "ENemyTesting")
+        if (knockCount == playerCount && SceneManager.GetActiveScene().name == /*Current Level name*/ "Map01")
         {
             //End Game
-            Debug.Log($"All Players Down {knockCount} : {playerCount}");
+            //Debug.Log($"All Players Down {knockCount} : {playerCount}");
             menuScene = true;
             SendClientsToNewScene("DeathScreen");
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             UnityEngine.Cursor.visible = true;
-            Debug.Log(UnityEngine.Cursor.lockState);
+            //Debug.Log(UnityEngine.Cursor.lockState);
             menuScene = true;
         }
     }

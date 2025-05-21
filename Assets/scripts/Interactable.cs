@@ -25,7 +25,7 @@ public class Interactable : NetworkBehaviour, IInteractable
     [Rpc(SendTo.ClientsAndHost)]
     public void removeDoorRpc()
     {
-        PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+        //PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
         if (cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
         {
             points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -cost);

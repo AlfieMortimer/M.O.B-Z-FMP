@@ -23,7 +23,7 @@ TagManager:
   - HurtPlayer
   - Player
   - IgnoreNavmesh
-  - 
+  - noCollideEnemy
   - 
   - 
   - 
