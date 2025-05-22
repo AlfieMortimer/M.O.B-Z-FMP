@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeathScreen.unity
     guid: e870111898443444dbc1db042f9d7ee2
+  - enabled: 1
+    path: Assets/Scenes/Map01.unity
+    guid: 9a218ecac8cfe34449caed9ab135b1ba
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

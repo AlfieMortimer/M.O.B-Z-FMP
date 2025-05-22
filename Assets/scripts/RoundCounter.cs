@@ -1,11 +1,13 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class RoundCounter : NetworkBehaviour
 {
     //Synced round count
     public NetworkVariable<int> currentRound = new NetworkVariable<int>();
     public int enemiesLeftToSpawn;
+    public int enemiesLeftToSpawnDefault;
     public int playerCount;
     public int zombieLimit = 32;
     public bool gameStart = false;
@@ -21,6 +23,15 @@ public class RoundCounter : NetworkBehaviour
         if (IsServer)
         {
             EndRoundCheckRPC();
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name != "Map01")
+        {
+            enemiesLeftToSpawn = enemiesLeftToSpawnDefault;
+            gameStart = false;
         }
     }
 

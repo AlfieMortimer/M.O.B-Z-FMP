@@ -1,9 +1,9 @@
-using UnityEngine;
-using Unity.Netcode;
-using Unity.Networking;
-using UnityEditor.PackageManager;
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.Networking;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PointsCollection : NetworkBehaviour, IEquatable<int[]>
 {
@@ -14,10 +14,12 @@ public class PointsCollection : NetworkBehaviour, IEquatable<int[]>
     {
         playerPoints = new NetworkList<int>();
     }
-    private void Start()
-    {
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        playerPoints.Clear();
     }
+
     private void Update()
     {
         if ((NetworkManager.IsConnectedClient || NetworkManager.IsHost) && complete == false)

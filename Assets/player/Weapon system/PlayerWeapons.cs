@@ -15,8 +15,11 @@ public class PlayerWeapons : NetworkBehaviour
 
     public List<string> weapons = new List<string>();
 
+
+
+
     public int weaponOne = 0;
-    int weaponAmmoOne = -5;
+    public int weaponAmmoOne = -5;
     public int WeaponReserveOne;
 
     public int weaponTwo;
@@ -30,7 +33,7 @@ public class PlayerWeapons : NetworkBehaviour
     public float timeBetweenShooting, spread, range, reloadTime;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
-    int bulletsLeft, bulletsShot;
+    public int bulletsLeft, bulletsShot;
 
     //bools
     [SerializeField]
@@ -43,7 +46,14 @@ public class PlayerWeapons : NetworkBehaviour
     public LayerMask Enemy;
     public TextMeshProUGUI bullets;
     
-    Animator anim;
+    public Animator anim;
+
+    public Animator pistolAnim;
+    public GameObject pistolGameobject;
+
+    public Animator saigaAnim;
+    public GameObject saigaGameobject;
+
     NetworkObject nO;
     public AllWeaponStats stats;
 
@@ -54,11 +64,13 @@ public class PlayerWeapons : NetworkBehaviour
     public ParticleSystem impact;
 
     public RoundCounter rc;
+
+    public audioManager am;
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
-        anim = GetComponentInChildren<Animator>();
+        //anim = GetComponentInChildren<Animator>();
         nO = GetComponent<NetworkObject>();
     }
 
@@ -95,10 +107,10 @@ public class PlayerWeapons : NetworkBehaviour
                 bulletsShot = stats.bulletsPerTap;
                 ShootFunc();
             }
-            if (Input.GetKeyDown(swapWeaponUp) || Input.GetKeyDown(swapWeaponDown))
+            /*if (Input.GetKeyDown(swapWeaponUp) || Input.GetKeyDown(swapWeaponDown))
             {
                 changeWeapon();
-            }
+            }*/
         }
     }
 
@@ -108,6 +120,7 @@ public class PlayerWeapons : NetworkBehaviour
     }
     private void ShootFunc()
     {
+        am.playsfx(am.sounds[0]);
         readyToShoot = false;
         bool enemydamage = false;
         Debug.Log("Shot Bullet");
