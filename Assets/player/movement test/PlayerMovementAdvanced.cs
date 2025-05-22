@@ -448,4 +448,9 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     {
         anim.Play("Idle");
     }
+
+    public void OnClientDisconnect()
+    {
+        Destroy(gameObject);
+    }
 }

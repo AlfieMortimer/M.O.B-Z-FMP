@@ -15,9 +15,6 @@ public class PlayerWeapons : NetworkBehaviour
 
     public List<string> weapons = new List<string>();
 
-
-
-
     public int weaponOne = 0;
     public int weaponAmmoOne = -5;
     public int WeaponReserveOne;
@@ -77,6 +74,8 @@ public class PlayerWeapons : NetworkBehaviour
     private void Start()
     {
         stats.ChangeWeaponStats(weaponOne);
+        am = GameObject.FindWithTag("NetworkFunctions").GetComponent<audioManager>();
+
     }
     private void Update()
     {

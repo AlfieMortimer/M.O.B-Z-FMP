@@ -21,6 +21,8 @@ public class BasicEnemyStats : NetworkBehaviour
 
     public Animator animator;
 
+    public audioManager am;
+
     // variables holding the different player states
     public IdleState idleState;
     public RunState runState;
@@ -30,6 +32,7 @@ public class BasicEnemyStats : NetworkBehaviour
 
     private void Start()
     {
+        am = GameObject.FindWithTag("NetworkFunctions").GetComponent<audioManager>();
         sm = gameObject.AddComponent<StateMachine>();
         en = gameObject.GetComponent<EnemyNavigation>();
         mr = gameObject.GetComponent<MeshRenderer>();
@@ -60,6 +63,7 @@ public class BasicEnemyStats : NetworkBehaviour
     public void TakeDamageRpc(int ClientID, int damage)
     {
         health -= damage;
+        am.playsfx(am.sounds[1]);
 
         if (health <= 0 && !respawning)
         {
@@ -78,5 +82,6 @@ public class BasicEnemyStats : NetworkBehaviour
     {
         var instanceNetworkObject = NetworkObject;
         instanceNetworkObject.Despawn();
+        am.playsfx(am.sounds[2]);
     }
 }

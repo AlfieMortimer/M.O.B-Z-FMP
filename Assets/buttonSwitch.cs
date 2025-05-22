@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 public class buttonSwitch : MonoBehaviour
 {
     NetworkManager nM;
+    PointsCollection pc;
+    RoundCounter rc;
+
+
     public void Start()
     {
         nM = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
+        pc = GameObject.FindGameObjectWithTag("NetworkFunctions").GetComponent<PointsCollection>();
+        rc = GameObject.FindGameObjectWithTag("NetworkFunctions").GetComponent<RoundCounter>();
+
+        Debug.Log(pc.ToString());
     }
     public void LoadScene(string SceneName)
     {
@@ -33,5 +41,12 @@ public class buttonSwitch : MonoBehaviour
                 NetworkManager.Singleton.DisconnectClient(nM.LocalClientId);
             }
         }
+    }
+
+    public void ResetGame()
+    {
+        pc.playerPoints.Clear();
+        rc.ResetRound();
+        pc.complete = false;
     }
 }

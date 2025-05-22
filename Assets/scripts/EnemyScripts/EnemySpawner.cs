@@ -18,6 +18,8 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] float enemySpawnDelay;
     [SerializeField] NetworkManager nM;
 
+
+
     private void Start()
     {
         if (IsHost)

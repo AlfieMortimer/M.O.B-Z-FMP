@@ -26,6 +26,12 @@ public class RoundCounter : NetworkBehaviour
         }
     }
 
+    public void ResetRound()
+    {
+        enemiesLeftToSpawn = enemiesLeftToSpawnDefault;
+        gameStart = false;
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name != "Map01")

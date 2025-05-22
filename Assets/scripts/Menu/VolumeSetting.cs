@@ -79,8 +79,16 @@ public class VolumeSetting : MonoBehaviour
     public void SetMasVolume()
     {
         float volume = masSlider.value;
-        myMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat("masVolume", volume);
+        if(masSlider.value > 0)
+        {
+            myMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+            PlayerPrefs.SetFloat("masVolume", volume);
+        }
+        else
+        {
+            myMixer.SetFloat("Master", -80f);
+            PlayerPrefs.SetFloat("masVolume", volume);
+        }
     }
 
 
@@ -88,7 +96,14 @@ public class VolumeSetting : MonoBehaviour
     public void SetSfxVolume()
     {
         float volume = sfxSlider.value;
+        if(sfxSlider.value > 0)
+        {
         myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+        }
+        else
+        {
+            myMixer.SetFloat("SFX", -80);
+        }
         PlayerPrefs.SetFloat("sfxVolume", volume);
     }
     public void SetMusicVolume()
@@ -96,7 +111,14 @@ public class VolumeSetting : MonoBehaviour
         if (isMuted == false)
         {
             float volume = musicSlider.value;
-            myMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+            if (musicSlider.value > 0) 
+            { 
+                myMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+            }
+            else
+            {
+                myMixer.SetFloat("Music", -80);
+            }
             PlayerPrefs.SetFloat("musicVolume", volume);
         }
         
@@ -115,5 +137,9 @@ public class VolumeSetting : MonoBehaviour
         SetMasVolume();
         
     }
-    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

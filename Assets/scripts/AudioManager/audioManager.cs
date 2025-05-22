@@ -32,7 +32,7 @@ public class audioManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-
+        StartCoroutine(LoopAudio(sounds[4]));
     }
 
     public void playsfx(AudioClip clip)
@@ -46,5 +46,16 @@ public class audioManager : MonoBehaviour
     public void stopmusic()
     {
         musicSource.Stop();
+    }
+
+    IEnumerator LoopAudio(AudioClip clip)
+    {
+        float length = clip.length;
+
+        while (true)
+        {
+            musicSource.PlayOneShot(clip);
+            yield return new WaitForSeconds(length);
+        }
     }
 }

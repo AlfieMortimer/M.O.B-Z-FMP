@@ -5708,6 +5708,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1452384154
       objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
+      objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.94
@@ -5859,6 +5863,10 @@ PrefabInstance:
     - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1820452055
+      objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
       objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6347,6 +6355,10 @@ PrefabInstance:
     - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 119654124
+      objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
       objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8584,6 +8596,10 @@ PrefabInstance:
     - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1124721378
+      objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
       objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11143,6 +11159,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1489021471
       objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
+      objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.94
@@ -12688,7 +12708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   weaponCode: 2
-  cost: 0
+  cost: 1000
   weapons: {fileID: 0}
   points: {fileID: 0}
 --- !u!114 &906363995
@@ -17055,6 +17075,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1145049964
       objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
+      objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.49
@@ -17115,6 +17139,10 @@ PrefabInstance:
     - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 689206640
+      objectReference: {fileID: 0}
+    - target: {fileID: 192961555514757380, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1975306326
       objectReference: {fileID: 0}
     - target: {fileID: 989644046407133740, guid: 24a5f6d575464de42b9c6189047a8fd2, type: 3}
       propertyPath: m_LocalPosition.x

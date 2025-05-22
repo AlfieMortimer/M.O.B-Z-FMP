@@ -9,15 +9,10 @@ public class PointsCollection : NetworkBehaviour, IEquatable<int[]>
 {
     public NetworkList<int> playerPoints;
 
-    bool complete = false;
+    public bool complete = false;
     private void Awake()
     {
         playerPoints = new NetworkList<int>();
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        playerPoints.Clear();
     }
 
     private void Update()
