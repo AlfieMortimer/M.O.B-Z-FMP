@@ -30,6 +30,7 @@ public class RoundCounter : NetworkBehaviour
     {
         enemiesLeftToSpawn = enemiesLeftToSpawnDefault;
         gameStart = false;
+        currentEnemyCount = 0;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
