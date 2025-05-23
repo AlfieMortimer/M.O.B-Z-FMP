@@ -13,6 +13,9 @@ public class Interactable : NetworkBehaviour, IInteractable
     public void Interact(GameObject p)
     {
         removeDoorRpc();
+        PlayerWeapons weapons = p.GetComponent<PlayerWeapons>();
+
+        weapons.am.playsfx(weapons.am.sounds[5]);
 
     }
     private void Start()
@@ -28,6 +31,7 @@ public class Interactable : NetworkBehaviour, IInteractable
         //PointsCollection points = GameObject.FindWithTag("NetworkFunctions").GetComponent<PointsCollection>();
         if (cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
         {
+            
             points.collectPointsRpc(Convert.ToInt32(OwnerClientId.ToString()), -cost);
             foreach (GameObject spawner in mySpawners)
             {

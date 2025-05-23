@@ -18,7 +18,7 @@ public class WallPurchasable : NetworkBehaviour, IInteractable
     public void Interact(GameObject p)
     {
         weapons = p.GetComponent<PlayerWeapons>();
-
+        weapons.am.playsfx(weapons.am.sounds[5]);
         if (cost <= points.playerPoints[Convert.ToInt32(OwnerClientId.ToString())])
         {
             if(weaponCode == 2 || weapons.weaponOne == 0)
