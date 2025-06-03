@@ -25,11 +25,13 @@ public class EnemySpawner : NetworkBehaviour
         if (IsHost)
         {
             roundCounter = GameObject.FindWithTag("NetworkFunctions").GetComponent<RoundCounter>();
+            enemySpawnDelay = 5;
         }
         nM = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
         if (!activeOnStart)
         {
             gameObject.SetActive(false);
+            enemySpawnDelay = 5;
         }
     }
     private void Update()
